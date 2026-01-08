@@ -1,0 +1,1 @@
+pip install streamlit langgraph langchain-groq langchain-community duckduckgo-search pydantic python-dotenv
