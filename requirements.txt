@@ -1,1 +1,8 @@
-pip install streamlit langgraph langchain-groq langchain-community duckduckgo-search pydantic python-dotenv
+langgraph
+langchain-groq
+langchain-community
+tavily-python
+python-dotenv
+streamlit
+fastapi
+uvicorn

@@ -1,14 +1,22 @@
-from langchain_community.tools import DuckDuckGoSearchResults
-from langchain_core.tools import tool
+import os
+from dotenv import load_dotenv
+from langchain_community.tools.tavily_search import TavilySearchResults
 
-@tool
-def web_search(query: str):
-    """
-    Cerca sul web prodotti, prezzi e LINK REALI.
-    Restituisce i risultati inclusi gli URL delle fonti.
-    """
-    # Usiamo SearchResults per avere i link strutturati
-    search = DuckDuckGoSearchResults()
-    return search.run(query)
+load_dotenv()
 
-tools = [web_search]
+def get_tools():
+    # Riduciamo max_results a 3 e togliamo raw_content per risparmiare token
+    search_tool = TavilySearchResults(
+        max_results=3,
+        search_depth="basic", # "basic" è più veloce e consuma meno
+        include_answer=True,
+        include_raw_content=False 
+    )
+    return [search_tool]
+
+if __name__ == "__main__":
+    tool_list = get_tools()
+    search = tool_list[0]
+    print("Test ricerca light...")
+    results = search.invoke({"query": "miglior laptop studenti 500 euro 2024"})
+    print(f"Token salvati! Risultati ottenuti: {len(results)}")
